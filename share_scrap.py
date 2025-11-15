@@ -50,8 +50,6 @@ for i in range(1, chiz):
     stock = f"({symbol}) {name}"
     cell = worksheet.cell(row=i+1, column=1, value=stock)
     cell.font = calibri_font
-# workbook.save(file)
-# workbook.close()
 
 
 driver.get("https://nepalstock.com/")
