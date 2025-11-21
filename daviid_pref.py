@@ -216,7 +216,7 @@ for sector in sector_options:
                     total_latest_vol = latest_vol
                 elif date == recent_trade:
                     total_latest_vol += latest_vol
-            avg_vol = total_vol / trade_days
+            avg_vol = (total_vol / trade_days) if trade_days != 0 else 0
             ws.update_cell(row, 2, avg_vol)
             sector_avg_vol += avg_vol
             recent_trade_str = recent_trade.strftime("%Y-%m-%d") if recent_trade else ''
