@@ -202,21 +202,23 @@ for sector in sector_options:
             scrapeAllPages().then(done);
         """)
         if data:
-            date_str = data['latest_trade_date']
+            date_str = data.get('latest_trade_date') or None
             latest_vol = data['latest_vol']
             total_vol = data['total']
             trade_days = data['trade_days']
-            date = datetime.strptime(date_str, "%Y-%m-%d")
-            if recent_trade is None:
-                recent_trade = date
-                total_latest_vol = latest_vol
-            elif date > recent_trade:
-                recent_trade = date
-                total_latest_vol = latest_vol
-            elif date == recent_trade:
-                total_latest_vol += latest_vol
+            if date_str:
+                date = datetime.strptime(date_str, "%Y-%m-%d")
+                if recent_trade is None:
+                    recent_trade = date
+                    total_latest_vol = latest_vol
+                elif date > recent_trade:
+                    recent_trade = date
+                    total_latest_vol = latest_vol
+                elif date == recent_trade:
+                    total_latest_vol += latest_vol
             avg_vol = total_vol / trade_days
             ws.update_cell(row, 2, avg_vol)
             sector_avg_vol += avg_vol
+            recent_trade_str = recent_trade.strftime("%Y-%m-%d") if recent_trade else ''
             print(f"{stock} --> {data['current_stock']}")
-    sector_ws.update(values=[[total_latest_vol, sector_avg_vol, recent_trade.strftime("%Y-%m-%d"), total_latest_vol]], range_name=f"B{s_row}:E{s_row}")
+    sector_ws.update(values=[[total_latest_vol, sector_avg_vol, recent_trade_str, total_latest_vol]], range_name=f"B{s_row}:E{s_row}")
