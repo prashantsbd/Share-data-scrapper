@@ -192,7 +192,7 @@ for sector in sector_options:
 
                     if(nextPageLink){
                         nextPageLink.click();          
-                        await wait(1500);  // ⬅ wait for page to fully re-render
+                        await wait(600);  // ⬅ wait for page to fully re-render
                         sumCurrentPage();
                     }
                 }
