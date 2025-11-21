@@ -151,6 +151,7 @@ for sector in sector_options:
             let latest_vol = 0;
             let total = 0;
             let trade_days = 0;
+            let current_stock = '';
 
             function parseNum(str){
                 return parseInt(str.replace(/,/g,''));
@@ -158,8 +159,10 @@ for sector in sector_options:
             function latestState(){
                 current_stock = document.querySelector(".company__title--details div h1").innerHTML;
                 let row = document.querySelector('div#pricehistorys table tbody tr');
-                latest_vol = parseNum(row.children[6]?.innerText.trim())
-                latest_trade_date = row.children[1]?.innerText.trim();
+                if (row){
+                    latest_vol = parseNum(row.children[6]?.innerText.trim())
+                    latest_trade_date = row.children[1]?.innerText.trim();
+                }
             }
             function sumCurrentPage(){
                 let rows = document.querySelectorAll('div#pricehistorys table tbody tr');
